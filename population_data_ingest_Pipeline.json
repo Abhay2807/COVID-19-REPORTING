@@ -1,0 +1,186 @@
+{
+  "name": "PL_Ingest_Population_Data",
+  "properties": {
+      "activities": [
+          {
+              "name": "Check if File Exists",
+              "type": "Validation",
+              "dependsOn": [],
+              "userProperties": [],
+              "typeProperties": {
+                  "dataset": {
+                      "referenceName": "ds_population_zip_raw",
+                      "type": "DatasetReference"
+                  },
+                  "timeout": "0.00:02:00",
+                  "sleep": 10,
+                  "minimumSize": 1024
+              }
+          },
+          {
+              "name": "Get File Metadata",
+              "type": "GetMetadata",
+              "dependsOn": [
+                  {
+                      "activity": "Check if File Exists",
+                      "dependencyConditions": [
+                          "Succeeded"
+                      ]
+                  }
+              ],
+              "policy": {
+                  "timeout": "0.12:00:00",
+                  "retry": 0,
+                  "retryIntervalInSeconds": 30,
+                  "secureOutput": false,
+                  "secureInput": false
+              },
+              "userProperties": [],
+              "typeProperties": {
+                  "dataset": {
+                      "referenceName": "ds_population_zip_raw",
+                      "type": "DatasetReference"
+                  },
+                  "fieldList": [
+                      "columnCount"
+                  ],
+                  "storeSettings": {
+                      "type": "AzureBlobStorageReadSettings",
+                      "recursive": true,
+                      "enablePartitionDiscovery": false
+                  },
+                  "formatSettings": {
+                      "type": "DelimitedTextReadSettings"
+                  }
+              }
+          },
+          {
+              "name": "If Column Count Matches",
+              "type": "IfCondition",
+              "dependsOn": [
+                  {
+                      "activity": "Get File Metadata",
+                      "dependencyConditions": [
+                          "Succeeded"
+                      ]
+                  }
+              ],
+              "userProperties": [],
+              "typeProperties": {
+                  "expression": {
+                      "value": "@equals(activity('Get File Metadata').output.columnCount,13)",
+                      "type": "Expression"
+                  },
+                  "ifFalseActivities": [
+                      {
+                          "name": "Fail Message",
+                          "type": "Fail",
+                          "dependsOn": [],
+                          "userProperties": [],
+                          "typeProperties": {
+                              "message": "Sorry Column Count does not match as specified by u.",
+                              "errorCode": "720"
+                          }
+                      }
+                  ],
+                  "ifTrueActivities": [
+                      {
+                          "name": "Copy_PopulationByAge_Data",
+                          "description": "This pipeline copies data from Blob storage to datalake of Population By Age data.",
+                          "type": "Copy",
+                          "dependsOn": [],
+                          "policy": {
+                              "timeout": "0.12:00:00",
+                              "retry": 0,
+                              "retryIntervalInSeconds": 30,
+                              "secureOutput": false,
+                              "secureInput": false
+                          },
+                          "userProperties": [],
+                          "typeProperties": {
+                              "source": {
+                                  "type": "DelimitedTextSource",
+                                  "storeSettings": {
+                                      "type": "AzureBlobStorageReadSettings",
+                                      "recursive": true,
+                                      "enablePartitionDiscovery": false
+                                  },
+                                  "formatSettings": {
+                                      "type": "DelimitedTextReadSettings"
+                                  }
+                              },
+                              "sink": {
+                                  "type": "DelimitedTextSink",
+                                  "storeSettings": {
+                                      "type": "AzureBlobFSWriteSettings"
+                                  },
+                                  "formatSettings": {
+                                      "type": "DelimitedTextWriteSettings",
+                                      "quoteAllText": true,
+                                      "fileExtension": ".txt"
+                                  }
+                              },
+                              "enableStaging": false,
+                              "translator": {
+                                  "type": "TabularTranslator",
+                                  "typeConversion": true,
+                                  "typeConversionSettings": {
+                                      "allowDataTruncation": true,
+                                      "treatBooleanAsNumber": false
+                                  }
+                              }
+                          },
+                          "inputs": [
+                              {
+                                  "referenceName": "ds_population_zip_raw",
+                                  "type": "DatasetReference"
+                              }
+                          ],
+                          "outputs": [
+                              {
+                                  "referenceName": "ls_datalake_population_extracted",
+                                  "type": "DatasetReference"
+                              }
+                          ]
+                      },
+                      {
+                          "name": "Delete Source File",
+                          "type": "Delete",
+                          "dependsOn": [
+                              {
+                                  "activity": "Copy_PopulationByAge_Data",
+                                  "dependencyConditions": [
+                                      "Succeeded"
+                                  ]
+                              }
+                          ],
+                          "policy": {
+                              "timeout": "0.12:00:00",
+                              "retry": 0,
+                              "retryIntervalInSeconds": 30,
+                              "secureOutput": false,
+                              "secureInput": false
+                          },
+                          "userProperties": [],
+                          "typeProperties": {
+                              "dataset": {
+                                  "referenceName": "ds_population_zip_raw",
+                                  "type": "DatasetReference"
+                              },
+                              "enableLogging": false,
+                              "storeSettings": {
+                                  "type": "AzureBlobStorageReadSettings",
+                                  "recursive": true,
+                                  "enablePartitionDiscovery": false
+                              }
+                          }
+                      }
+                  ]
+              }
+          }
+      ],
+      "annotations": [],
+      "lastPublishTime": "2024-01-15T10:40:01Z"
+  },
+  "type": "Microsoft.DataFactory/factories/pipelines"
+}
