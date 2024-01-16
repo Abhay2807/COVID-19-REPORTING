@@ -19,7 +19,7 @@ The first pipeline ingests data after extracting zipped file from Azure Blob Sto
 ![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/1c6e687a-678b-4897-8035-7fff1a16d661)
 
 
-The second pipeline ingests data from the ECDC website, which is first stored in this GitHub repo. I have used an HTTP connection to the ADLS container, using a schedule trigger, to ingest this data. The pipeline picks all required connection details from a JSON lookup file and uses each activity to run a copy activity for each file. This method is efficient and allows you to ingest any number of files into the ADLS container in a single pipeline run.
+The second pipeline ingests data from the ECDC website(https://www.ecdc.europa.eu/en/covid-19/data), which is first stored in this GitHub repo. I have used an HTTP connection to the ADLS container, using a schedule trigger, to ingest this data. The pipeline picks all required connection details from a JSON lookup file and uses each activity to run a copy activity for each file. This method is efficient and allows you to ingest any number of files into the ADLS container in a single pipeline run.
 
 ![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/0f7ed84f-711b-43b0-beca-f5107db2f956)
 ![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/2e9247bd-5ceb-4372-9184-7dbe78fe416f)
