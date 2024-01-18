@@ -1,0 +1,23 @@
+[
+  {   "sourceBaseURL":"https://raw.githubusercontent.com",
+      "sourceRelativeURL":"/Abhay2807/COVID-19-REPORTING/main/DATA-files/ecdc_website_data/cases_deaths.csv",
+      "sinkFileName":"cases_deaths.csv"
+  },
+  {   "sourceBaseURL":"https://raw.githubusercontent.com",
+      "sourceRelativeURL":"/Abhay2807/COVID-19-REPORTING/main/DATA-files/ecdc_website_data/hospital_admissions.csv",
+      "sinkFileName":"hospital_admissions.csv"
+  },
+  {   "sourceBaseURL":"https://raw.githubusercontent.com",
+      "sourceRelativeURL":"/Abhay2807/COVID-19-REPORTING/main/DATA-files/ecdc_website_data/case_deaths_uk_ind_only.csv",
+      "sinkFileName":"case_deaths_uk_ind_only.csv"
+  },
+  {   "sourceBaseURL":"https://raw.githubusercontent.com",
+      "sourceRelativeURL":"/Abhay2807/COVID-19-REPORTING/main/DATA-files/ecdc_website_data/country_response.csv",
+      "sinkFileName":"country_response.csv"
+  },
+  {   "sourceBaseURL":"https://raw.githubusercontent.com",
+      "sourceRelativeURL":"/Abhay2807/COVID-19-REPORTING/main/DATA-files/ecdc_website_data/testing.csv",
+      "sinkFileName":"testing.csv"
+  }
+
+]
