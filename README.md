@@ -76,7 +76,7 @@ Desired results:
 
 ![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/e9df75a8-b2c0-48e7-bd29-6f0901b410ce)
 
-![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/f6c5c445-e3c0-4764-a124-6c4a6f79bb36)
+
 
 Pipelines execution:
 
