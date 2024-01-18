@@ -26,4 +26,17 @@ The second pipeline ingests data from the ECDC website(https://www.ecdc.europa.e
 
 ![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/08a4331d-2d56-4278-b950-3c6741b7c380)
 
-#
+# STEP 02 
+# Using data Flow for transformation 
+
+I have completed the second step of transforming the biggest ECDC file called Cases_Deaths.csv, which is present in the raw container in ADLS. 
+
+![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/5e6793f4-b1d4-4737-8e56-0252b6937412)
+
+My Target was to get some desired columns in output after,doing transformation using data flow:
+
+![image](https://github.com/Abhay2807/COVID-19-REPORTING/assets/76277587/485433bc-4bd2-410c-aa6a-a22a56730d0b)
+
+
+
+
